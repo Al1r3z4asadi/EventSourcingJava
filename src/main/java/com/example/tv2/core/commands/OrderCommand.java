@@ -1,15 +1,14 @@
 package com.example.tv2.core.commands;
 
-import com.example.tv2.core.Dto.ProdocutDto;
+import com.example.tv2.core.Dto.ProductDto;
 
 import java.util.List;
-import java.util.UUID;
 
 public interface OrderCommand extends ICommand {
 
     record AddProductToOrder(
             String phoneNumber,
-            List<ProdocutDto> data
+            List<ProductDto> data
     ) implements OrderCommand {}
 
     record  RemoveProductFromOrder(

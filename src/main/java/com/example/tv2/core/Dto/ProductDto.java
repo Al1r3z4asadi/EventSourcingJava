@@ -1,8 +1,13 @@
 package com.example.tv2.core.Dto;
 
-public class ProdocutDto {
+public class ProductDto {
     private String productId ;
-    private Long count ;
+    private Integer count ;
+
+    public ProductDto(String productId, Integer quantity) {
+        this.productId = productId ;
+        this.count = quantity ;
+    }
 
     public String getProductId() {
         return productId;
@@ -11,10 +16,10 @@ public class ProdocutDto {
         this.productId = productId ;
     }
 
-    public Long getCount() {
+    public Integer getCount() {
         return count;
     }
-    public void setCount(Long count){
+    public void setCount(Integer count){
         this.count = count ;
     }
 }

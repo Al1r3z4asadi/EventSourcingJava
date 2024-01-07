@@ -1,4 +1,4 @@
-package com.example.tv2.api;
+package com.example.tv2.api.controllers;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

@@ -11,4 +11,9 @@ public interface OrderCommand extends ICommand {
             String phoneNumber,
             List<ProdocutDto> data
     ) implements OrderCommand {}
+
+    record  RemoveProductFromOrder(
+
+    ) implements OrderCommand {}
+
 }

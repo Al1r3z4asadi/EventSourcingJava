@@ -8,8 +8,6 @@ import com.example.tv2.core.handlers.command.IOrderCommandHandler;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.UUID;
-
 import static java.time.LocalDateTime.now;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.OK;
@@ -42,7 +40,6 @@ public class OrderController {
                         .status(result.isSuccess() ? OK : BAD_REQUEST)
                         .statusCode(result.isSuccess() ? OK.value() : BAD_REQUEST.value())
                         .build()
-        ) ;
+        );
     }
-
 }

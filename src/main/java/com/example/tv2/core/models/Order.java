@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public class Order extends AbstractAggregate<IEvent, UUID> {
 
-    private String userPhoneNumber ;
+
 
     @Override
     public void when(IEvent Event) {

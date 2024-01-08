@@ -1,13 +1,15 @@
 package com.example.tv2.core.aggregate;
 
-
+import com.eventstore.dbclient.AppendToStreamOptions;
 import com.eventstore.dbclient.EventStoreDBClient;
 import com.eventstore.dbclient.ReadResult;
 import com.eventstore.dbclient.StreamNotFoundException;
 import com.example.tv2.core.serialization.EventSerializer;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -49,5 +51,48 @@ public class AggregateStore<Entity extends AbstractAggregate<Event, Id>, Event, 
         return Optional.of(events);
     }
 
+    Optional<Entity> get(Id id) {
+        var streamId = mapToStreamId.apply(id);
 
+        var events = getEvents(streamId);
+
+        if (events.isEmpty())
+            return Optional.empty();
+
+        var current = getEmpty.get();
+
+        for (var event : events.get()) {
+            current.when(event);
+        }
+
+        return Optional.ofNullable(current);
+    }
+
+    public void getAndUpdate(Consumer<Entity> handle, Id id, long expectedRevision)
+    {
+        var streamId = mapToStreamId.apply(id);
+        var entity = get(id).orElseThrow(
+                () -> new RuntimeException("Stream with id %s was not found".formatted(streamId))
+        );
+
+        handle.accept(entity);
+
+        appendEvents(entity, AppendToStreamOptions.get().expectedRevision(expectedRevision));
+    }
+
+    public void appendEvents(Entity entity, AppendToStreamOptions appendOptions) {
+        var streamId = mapToStreamId.apply(entity.id());
+        var events = Arrays.stream(entity.dequeueUncommittedEvents())
+                .map(event -> EventSerializer.serialize(event));
+        try {
+            var result = eventStore.appendToStream(
+                    streamId,
+                    appendOptions,
+                    events.iterator()
+            ).get();
+        } catch (Throwable e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
+

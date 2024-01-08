@@ -33,4 +33,7 @@ public abstract class AbstractAggregate<Event, Id> implements Aggregate<Id> {
         when(event);
         version++;
     }
+
+
+
 }

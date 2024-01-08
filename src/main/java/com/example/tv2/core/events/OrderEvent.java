@@ -9,7 +9,6 @@ public interface OrderEvent extends IEvent{
 
     record ProductAddedToOrder(
             UUID orderId ,
-            int count ,
             ProductItem item
     ) implements OrderEvent {
     }

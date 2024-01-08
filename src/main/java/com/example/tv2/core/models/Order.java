@@ -15,6 +15,12 @@ public class Order extends AbstractAggregate<OrderEvent, UUID> {
         return products;
     }
 
+    void addProductItem(ProductItem productItem) {
+           enqueue(new OrderEvent.ProductAddedToOrder(
+                id,
+                productItem
+        ));
+    }
 
     public static Order empty(){
         return new Order();

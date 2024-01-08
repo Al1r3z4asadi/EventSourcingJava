@@ -19,6 +19,7 @@ public class OrderCommandHandler implements IOrderCommandHandler {
     @Override
     public ServiceResult handle(OrderCommand.AddProductToOrder command) {
 
+        _orderdomainService.AddProduct(command) ;
         return ServiceResult.failure("error");
     }
 

@@ -11,6 +11,7 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+
 public class AggregateStore<Entity extends AbstractAggregate<Event, Id>, Event, Id> {
     private final EventStoreDBClient eventStore;
     private final Function<Id, String> mapToStreamId;

@@ -1,9 +1,12 @@
 package com.example.tv2.core.models;
 
+import lombok.Getter;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Getter
 public class Product {
 
     private List<ProductItem> items;

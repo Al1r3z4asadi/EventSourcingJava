@@ -34,8 +34,8 @@ public class Order extends AbstractAggregate<OrderEvent, UUID> {
         }
     }
 
-    public static String mapToStreamId(UUID shoppingCartId) {
-        return "ShoppingCart-%s".formatted(shoppingCartId);
+    public static String mapToStreamId(UUID orderId) {
+        return "Order-%s".formatted(orderId);
     }
 
 

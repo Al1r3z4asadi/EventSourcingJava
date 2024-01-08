@@ -18,7 +18,7 @@ public class OrderDomainService {
 
     public void AddProduct(OrderCommand.AddProductToOrder command) {
 //        TODO : check if exist in this microservice mini repository
-        store.
+
 
     }
 

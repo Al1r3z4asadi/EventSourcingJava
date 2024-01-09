@@ -9,17 +9,31 @@ import java.util.UUID;
 public class Order extends AbstractAggregate<OrderEvent, UUID> {
 
     private UUID Id ;
+    private  String phoneNumber ;
     private Product products;
 
+    public Order(
+            UUID id,
+            String phoneNumber
+    ) {
+        this.id = id;
+        this.phoneNumber = phoneNumber;
+
+        enqueue(new OrderEvent.OrderInitiated(id, phoneNumber));
+    }
     public Product products() {
         return products;
     }
 
-    void addProductItem(ProductItem productItem) {
+    public void addProductItem(Product productItems) {
            enqueue(new OrderEvent.ProductAddedToOrder(
                 id,
-                productItem
+                productItems
         ));
+    }
+
+    private Order(){
+
     }
 
     public static Order empty(){

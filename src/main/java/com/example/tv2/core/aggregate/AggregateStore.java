@@ -1,9 +1,6 @@
 package com.example.tv2.core.aggregate;
 
-import com.eventstore.dbclient.AppendToStreamOptions;
-import com.eventstore.dbclient.EventStoreDBClient;
-import com.eventstore.dbclient.ReadResult;
-import com.eventstore.dbclient.StreamNotFoundException;
+import com.eventstore.dbclient.*;
 import com.example.tv2.core.serialization.EventSerializer;
 
 import java.util.Arrays;
@@ -67,6 +64,14 @@ public class AggregateStore<Entity extends AbstractAggregate<Event, Id>, Event, 
 
         return Optional.ofNullable(current);
     }
+
+    public void add(Entity entity) {
+        appendEvents(
+                entity,
+                AppendToStreamOptions.get().expectedRevision(ExpectedRevision.NO_STREAM)
+        );
+    }
+
 
     public void getAndUpdate(Consumer<Entity> handle, Id id, long expectedRevision)
     {

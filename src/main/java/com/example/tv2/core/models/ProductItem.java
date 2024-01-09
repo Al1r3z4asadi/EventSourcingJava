@@ -27,6 +27,12 @@ public class ProductItem {
         this.unitPrice = unitPrice ;
     }
 
+    public BigDecimal totalPrice() {
+        return this.getUnitPrice().multiply(BigDecimal.valueOf(this.getQuantity()));
+    }
+
+
+
     public UUID getProductId() {
         return productId;
     }
@@ -37,9 +43,9 @@ public class ProductItem {
         return quantity;
     }
 
-    public boolean matchesProductAndUnitPrice(ProductItem pricedProductItem) {
-        return this.productId.equals(pricedProductItem.getProductId())
-                && this.unitPrice == pricedProductItem.getUnitPrice() ;
+    public boolean matchesProductAndUnitPrice(ProductItem productItem) {
+        return this.productId.equals(productItem.getProductId())
+                && this.unitPrice == productItem.getUnitPrice() ;
     }
 
 

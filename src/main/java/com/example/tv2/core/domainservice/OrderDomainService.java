@@ -4,9 +4,13 @@ import com.example.tv2.core.aggregate.AggregateStore;
 import com.example.tv2.core.commands.OrderCommand;
 import com.example.tv2.core.events.OrderEvent;
 import com.example.tv2.core.models.Order;
+import com.example.tv2.core.models.Product;
+import com.example.tv2.core.models.ProductItem;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderDomainService {
@@ -16,9 +20,25 @@ public class OrderDomainService {
         this.store = store;
     }
 
+    private void initiateOrder(UUID orderId , String phoneNumber){
+        store.add(new Order(orderId , phoneNumber));
+    }
+
+
     public void AddProduct(OrderCommand.AddProductToOrder command) {
 //        TODO : check if exist in this microservice mini repository
+        var orderId = UUID.randomUUID();
+        initiateOrder(orderId , command.phoneNumber());
 
+        List<ProductItem> items = command.data().stream()
+                .map(dto -> new ProductItem(UUID.fromString(dto.getProductId()), dto.getCount() , dto.getPrice()))
+                .collect(Collectors.toList());
+
+        store.getAndUpdate(
+                current -> current.addProductItem(new Product(items)),
+                orderId,
+                0
+        );
 
     }
 

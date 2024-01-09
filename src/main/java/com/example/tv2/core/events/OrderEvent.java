@@ -7,10 +7,11 @@ import java.util.UUID;
 
 public interface OrderEvent extends IEvent{
 
-    record ProductAddedToOrder(
-            UUID orderId ,
-            ProductItem item
-    ) implements OrderEvent {
+
+    record  OrderInitiated(UUID orderId , String phoneNumber) implements  OrderEvent{
+    }
+
+    record ProductAddedToOrder(UUID orderId , Product item) implements OrderEvent {
     }
 
 

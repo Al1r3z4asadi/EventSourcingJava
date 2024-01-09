@@ -15,6 +15,11 @@ public class Product {
         this.items = new ArrayList<>(items);
     }
 
+    public Product add(Product productItems) {
+        var clone = new ArrayList<>(this.items);
+        clone.addAll(productItems.getItems());
+        return new Product(clone);
+    }
     public Product add(ProductItem productItem) {
         var clone = new ArrayList<>(items);
 

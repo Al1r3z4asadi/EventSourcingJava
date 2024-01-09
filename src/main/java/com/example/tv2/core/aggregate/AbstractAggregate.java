@@ -31,7 +31,8 @@ public abstract class AbstractAggregate<Event, Id> implements Aggregate<Id> {
     protected void enqueue(Event event) {
         uncommittedEvents.add(event);
         when(event);
-        version++;
+//        version++;
+//        no versioning for now
     }
 
 

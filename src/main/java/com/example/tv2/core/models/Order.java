@@ -12,6 +12,12 @@ public class Order extends AbstractAggregate<OrderEvent, UUID> {
     private  String phoneNumber ;
     private Product products;
 
+    private OrderStatus status;
+
+    OrderStatus status() {
+        return status;
+    }
+
     public Order(
             UUID id,
             String phoneNumber
@@ -49,7 +55,14 @@ public class Order extends AbstractAggregate<OrderEvent, UUID> {
         if (orderEvent instanceof OrderEvent.ProductAddedToOrder) {
             OrderEvent.ProductAddedToOrder productAdded = (OrderEvent.ProductAddedToOrder) orderEvent;
             products = products.add(productAdded.item());
-        } else {
+        }
+        else if(orderEvent instanceof OrderEvent.OrderInitiated){
+            id = ((OrderEvent.OrderInitiated) orderEvent).orderId();
+            phoneNumber = ((OrderEvent.OrderInitiated) orderEvent).phoneNumber();
+            products = products.empty() ;
+            status = OrderStatus.Pending;
+        }
+        else {
             throw new IllegalArgumentException("Unsupported event type: " + orderEvent.getClass().getSimpleName());
         }
     }

@@ -1,4 +1,4 @@
-package com.example.tv2.core.events;
+package com.example.tv2.core.events.eventbus;
 
 
 import java.util.HashMap;

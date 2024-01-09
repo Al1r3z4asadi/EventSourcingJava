@@ -4,7 +4,7 @@ package com.example.tv2.core.serialization;
 import com.eventstore.dbclient.EventData;
 import com.eventstore.dbclient.EventDataBuilder;
 import com.eventstore.dbclient.ResolvedEvent;
-import com.example.tv2.core.events.EventTypeMapper;
+import com.example.tv2.core.events.eventbus.EventTypeMapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;

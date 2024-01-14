@@ -3,6 +3,7 @@ package com.example.tv2.api.models.request;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.validation.annotation.Validated;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
@@ -12,15 +13,9 @@ public final class OrderRequests {
     @Validated
     public record ProductItemRequest(
             @NotNull String productId,
-            @NotNull Integer quantity
-    ) {
-        public String getProductId() {
-            return productId;
-        }
-
-        public Integer getQuantity() {
-            return this.quantity ;
-        }
+            @NotNull Integer quantity ,
+            @NotNull BigDecimal price
+            ) {
     }
 
     public record AddProduct(

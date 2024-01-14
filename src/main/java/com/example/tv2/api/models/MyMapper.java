@@ -16,8 +16,9 @@ public class MyMapper {
     }
     private ProductDto mapProductItemRequestToProductDto(OrderRequests.ProductItemRequest productItemRequest) {
         return new ProductDto(
-                productItemRequest.getProductId(),
-                productItemRequest.getQuantity()
+                productItemRequest.productId(),
+                productItemRequest.quantity() ,
+                productItemRequest.price()
         );
     }
 }

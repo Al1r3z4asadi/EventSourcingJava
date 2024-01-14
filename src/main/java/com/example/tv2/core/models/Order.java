@@ -1,7 +1,6 @@
 package com.example.tv2.core.models;
 
 import com.example.tv2.core.aggregate.AbstractAggregate;
-import com.example.tv2.core.events.IEvent;
 import com.example.tv2.core.events.OrderEvent;
 
 import java.util.UUID;

@@ -20,7 +20,6 @@ public abstract class JPAProjection<View, Id> {
 
     protected <Event extends IEvent> void add(EventEnvelope<Event> eventEnvelope, Supplier<View> handle) {
         var result = handle.get();
-
         repository.save(result);
     }
 

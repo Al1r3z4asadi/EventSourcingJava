@@ -8,7 +8,7 @@ import jakarta.persistence.*;
 import java.util.UUID;
 
 @Entity
-public class OrderDetailsView implements IVIEW {
+public class OrderDetailsView implements IView {
     @Id
     private UUID id;
     @Column(nullable = false)
@@ -21,6 +21,22 @@ public class OrderDetailsView implements IVIEW {
     @Column(nullable = false)
     private long lastProcessedPosition;
 
+
+    public UUID getId() {
+        return id;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public OrderStatus getStatus() {
+        return status;
+    }
+
+    public long getLastProcessedPosition() {
+        return lastProcessedPosition;
+    }
 
     public OrderDetailsView(UUID id , String phoneNumber , OrderStatus status,
                             long lastProcessedPosition){

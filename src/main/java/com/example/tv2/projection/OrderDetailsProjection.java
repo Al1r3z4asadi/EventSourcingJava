@@ -20,7 +20,6 @@ public class OrderDetailsProjection extends JPAProjection<OrderDetailsView, UUID
     void handleOrderInitiated(EventEnvelope<OrderEvent.OrderInitiated> eventEnvelope) {
         add(eventEnvelope, () -> {
             var event = eventEnvelope.data();
-
             return new OrderDetailsView(
                     event.orderId(),
                     event.phoneNumber(),

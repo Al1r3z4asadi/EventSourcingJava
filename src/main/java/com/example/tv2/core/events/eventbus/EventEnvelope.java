@@ -2,18 +2,19 @@ package com.example.tv2.core.events.eventbus;
 
 
 import com.eventstore.dbclient.ResolvedEvent;
+import com.example.tv2.core.events.IEvent;
 import com.example.tv2.core.serialization.EventSerializer;
 import org.springframework.core.ResolvableType;
 import org.springframework.core.ResolvableTypeProvider;
 
 import java.util.Optional;
 
-public record EventEnvelope<Event>(
+public record EventEnvelope<Event extends IEvent>(
         Event data,
         EventMetadata metadata
 ) implements ResolvableTypeProvider {
 
-    public static <Event> Optional<EventEnvelope<Event>> of(final Class<Event> type, ResolvedEvent resolvedEvent) {
+    public static <Event extends IEvent> Optional<EventEnvelope<Event>> of(final Class<Event> type, ResolvedEvent resolvedEvent) {
         if (type == null)
             return Optional.empty();
 

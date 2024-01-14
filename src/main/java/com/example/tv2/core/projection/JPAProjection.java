@@ -1,6 +1,7 @@
 package com.example.tv2.core.projection;
 
 
+import com.example.tv2.core.events.IEvent;
 import com.example.tv2.core.events.eventbus.EventEnvelope;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,13 +18,13 @@ public abstract class JPAProjection<View, Id> {
         this.repository = repository;
     }
 
-    protected <Event> void add(EventEnvelope<Event> eventEnvelope, Supplier<View> handle) {
+    protected <Event extends IEvent> void add(EventEnvelope<Event> eventEnvelope, Supplier<View> handle) {
         var result = handle.get();
 
         repository.save(result);
     }
 
-    protected <Event> void getAndUpdate(
+    protected <Event extends IEvent> void getAndUpdate(
             Id viewId,
             EventEnvelope<Event> eventEnvelope,
             Function<View, View> handle

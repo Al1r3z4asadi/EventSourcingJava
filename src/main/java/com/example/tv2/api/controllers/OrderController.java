@@ -5,6 +5,8 @@ import com.example.tv2.api.models.request.OrderRequests;
 import com.example.tv2.api.models.response.Envelope;
 import com.example.tv2.core.commands.OrderCommand;
 import com.example.tv2.core.handlers.command.IOrderCommandHandler;
+import com.example.tv2.core.handlers.query.IOrderQueryHandler;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,8 +20,13 @@ public class OrderController {
 
     private final IOrderCommandHandler _handler ;
 
-    public OrderController(IOrderCommandHandler handler) {
+//    private final IOrderQueryHandler _queryhandler ;
+
+    public OrderController(IOrderCommandHandler handler
+//                           IOrderQueryHandler _queryHandler
+    ) {
         _handler = handler;
+//        this._queryhandler =_queryHandler ;
     }
 
     @PostMapping("")

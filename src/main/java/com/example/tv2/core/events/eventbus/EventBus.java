@@ -1,4 +1,5 @@
 package com.example.tv2.core.events.eventbus;
+import com.example.tv2.core.events.IEvent;
 import org.springframework.context.ApplicationEventPublisher;
 
 public class EventBus implements IEventBus {
@@ -9,7 +10,7 @@ public class EventBus implements IEventBus {
     }
 
     @Override
-    public <Event> void publish(EventEnvelope<Event> event) {
+    public <Event extends IEvent> void publish(EventEnvelope<Event> event) {
         applicationEventPublisher.publishEvent(event);
     }
 

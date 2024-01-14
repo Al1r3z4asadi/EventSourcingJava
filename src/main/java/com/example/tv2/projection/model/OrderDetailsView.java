@@ -1,4 +1,4 @@
-package com.example.tv2.core.projection.model;
+package com.example.tv2.projection.model;
 
 import com.example.tv2.core.models.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;

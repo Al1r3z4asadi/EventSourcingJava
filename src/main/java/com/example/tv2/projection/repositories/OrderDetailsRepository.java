@@ -1,6 +1,6 @@
-package com.example.tv2.core.projection.repositories;
+package com.example.tv2.projection.repositories;
 
-import com.example.tv2.core.projection.model.OrderDetailsView;
+import com.example.tv2.projection.model.OrderDetailsView;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

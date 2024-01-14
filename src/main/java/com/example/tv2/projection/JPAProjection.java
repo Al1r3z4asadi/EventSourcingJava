@@ -1,4 +1,4 @@
-package com.example.tv2.core.projection;
+package com.example.tv2.projection;
 
 
 import com.example.tv2.core.events.IEvent;

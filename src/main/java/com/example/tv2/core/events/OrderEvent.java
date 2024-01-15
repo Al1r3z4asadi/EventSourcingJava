@@ -11,7 +11,7 @@ public interface OrderEvent extends IEvent{
     record  OrderInitiated(UUID orderId , String phoneNumber) implements  OrderEvent{
     }
 
-    record ProductAddedToOrder(UUID orderId , Product item) implements OrderEvent {
+    record ProductAddedToOrder(UUID orderId , Product items) implements OrderEvent {
     }
 
 

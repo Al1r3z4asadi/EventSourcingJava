@@ -53,7 +53,7 @@ public class Order extends AbstractAggregate<OrderEvent, UUID> {
 
         if (orderEvent instanceof OrderEvent.ProductAddedToOrder) {
             OrderEvent.ProductAddedToOrder productAdded = (OrderEvent.ProductAddedToOrder) orderEvent;
-            products = products.add(productAdded.item());
+            products = products.add(productAdded.items());
         }
         else if(orderEvent instanceof OrderEvent.OrderInitiated){
             id = ((OrderEvent.OrderInitiated) orderEvent).orderId();

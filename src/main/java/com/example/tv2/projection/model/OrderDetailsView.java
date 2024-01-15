@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -21,6 +22,13 @@ public class OrderDetailsView implements IView {
     @Column(nullable = false)
     private long lastProcessedPosition;
 
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @JoinColumn(name="shopping_cart_id")
+    private List<OrderDetailsProductItem> productItems;
+
+    public List<OrderDetailsProductItem> getProductItems() {
+        return productItems;
+    }
 
     public UUID getId() {
         return id;

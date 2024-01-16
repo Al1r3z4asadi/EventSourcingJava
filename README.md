@@ -25,7 +25,7 @@ This project is a Java Spring Boot application that leverages the Event Sourcing
 
 ### Installation
 
-1. **Clone the repository:** `git clone git@github.com:your-username/your-project.git`
+1. **Clone the repository:** `git clone git@github.com:Al1r3z4asadi/EventSourcingJava.git`
 2. **Configure Application Properties:** Set up application properties for EventStoreDB, PostgreSQL, and JPA in `application.properties`.
 
 ### Usage

@@ -18,48 +18,31 @@ import java.util.stream.Collectors;
 @Service
 public class OrderDomainService {
     private final AggregateStore<Order, OrderEvent, UUID> store;
-    private final OrderDetailsRepository detailsRepository;
 
 
-    public OrderDomainService(AggregateStore<Order, OrderEvent, UUID> store ,
-                              OrderDetailsRepository detailsRepository) {
+    public OrderDomainService(AggregateStore<Order, OrderEvent, UUID> store ) {
         this.store = store;
-        this.detailsRepository = detailsRepository ;
     }
 
-    private void initiateOrder(UUID orderId , String phoneNumber){
-        store.add(new Order(orderId , phoneNumber));
+    private long initiateOrder(UUID orderId , String phoneNumber , String correlationId){
+        var order = Order.Initiate(orderId , phoneNumber , correlationId);
+        return store.add(order);
     }
-
 
     public void AddProduct(OrderCommand.AddProductToOrder command) {
 //        TODO : check if exist in this microservice mini repository
         var orderId = UUID.randomUUID();
-        initiateOrder(orderId , command.phoneNumber());
-
-        List<ProductItem> items = command.data().stream()
-                .map(dto -> new ProductItem(UUID.fromString(dto.getProductId()), dto.getCount() , dto.getPrice()))
-                .collect(Collectors.toList());
-
+        String correlationId = UUID.randomUUID().toString();
+        long causeationId = initiateOrder(orderId , command.phoneNumber() , correlationId);
         store.getAndUpdate(
-                current -> current.addProductItem(new Product(items)),
+                current -> current.addProductItem(new Product(command.data()) ,correlationId , causeationId),
                 orderId,
                 0
+
         );
-
     }
 
-    public OrderDetailsDto getOrderDetails(UUID uuid) {
-        var result = detailsRepository.findById(uuid);
-        if(result.isEmpty()){
-            throw new EntityNotFoundException("Shopping cart not found");
-        }
-        var data =  result.get();
-        OrderDetailsDto dto = new OrderDetailsDto();
-        dto.setPhoneNumber(data.getPhoneNumber());
-        dto.setStatus(data.getStatus());
-        return dto ;
-    }
+
 
 //    private final ProductRepository productRepository ;
 

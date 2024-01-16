@@ -4,22 +4,23 @@ import com.example.tv2.core.Dto.OrderDetailsDto;
 import com.example.tv2.core.domainservice.OrderDomainService;
 import com.example.tv2.core.handlers.query.IOrderQueryHandler;
 import com.example.tv2.core.queries.OrderQuery;
-import com.example.tv2.projection.repositories.OrderDetailsRepository;
+import com.example.tv2.report.OrderReport;
 import com.example.tv2.utils.ServiceResult;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.retry.support.RetryTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class OrderQueryHandler implements IOrderQueryHandler {
 
-    private final OrderDomainService _domain ;
+    @Autowired
+    private final OrderReport _report ;
 
-    public OrderQueryHandler(OrderDomainService domain) {
-        this._domain = domain;
+    public OrderQueryHandler(OrderReport report) {
+        _report = report;
     }
 
     @Override
@@ -30,7 +31,7 @@ public class OrderQueryHandler implements IOrderQueryHandler {
                 .withinMillis(5000)
                 .build();
             return retryTemplate.execute(context ->
-                    ServiceResult.success(this._domain.getOrderDetails(query.orderId())));
+                    ServiceResult.success(this._report.getOrderDetails(query.orderId())));
     }
 
     @Override

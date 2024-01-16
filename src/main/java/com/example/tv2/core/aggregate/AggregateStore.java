@@ -1,11 +1,13 @@
 package com.example.tv2.core.aggregate;
 
 import com.eventstore.dbclient.*;
+import com.example.tv2.core.events.EventMetadata;
 import com.example.tv2.core.serialization.EventSerializer;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -64,8 +66,8 @@ public class AggregateStore<Entity extends AbstractAggregate<Event, Id>, Event, 
         return Optional.ofNullable(current);
     }
 
-    public void add(Entity entity) {
-        appendEvents(
+    public long add(Entity entity) {
+        return appendEvents(
                 entity,
                 AppendToStreamOptions.get().expectedRevision(ExpectedRevision.NO_STREAM)
         );
@@ -78,22 +80,21 @@ public class AggregateStore<Entity extends AbstractAggregate<Event, Id>, Event, 
         var entity = get(id).orElseThrow(
                 () -> new RuntimeException("Stream with id %s was not found".formatted(streamId))
         );
-
         handle.accept(entity);
-
         appendEvents(entity, AppendToStreamOptions.get().expectedRevision(expectedRevision));
     }
 
-    public void appendEvents(Entity entity, AppendToStreamOptions appendOptions) {
+    public long appendEvents(Entity entity, AppendToStreamOptions appendOptions) {
         var streamId = mapToStreamId.apply(entity.id());
         var events = Arrays.stream(entity.dequeueUncommittedEvents())
                 .map(event -> EventSerializer.serialize(event));
         try {
-            var result = eventStore.appendToStream(
+            WriteResult result = eventStore.appendToStream(
                     streamId,
                     appendOptions,
                     events.iterator()
             ).get();
+            return result.getNextExpectedRevision().getValueUnsigned();
         } catch (Throwable e) {
             throw new RuntimeException(e);
         }

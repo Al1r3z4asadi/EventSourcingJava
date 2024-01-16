@@ -23,7 +23,7 @@ public class OrderDetailsView implements IView {
     private long lastProcessedPosition;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    @JoinColumn(name="shopping_cart_id")
+    @JoinColumn(name="order_id")
     private List<OrderDetailsProductItem> productItems;
 
     public List<OrderDetailsProductItem> getProductItems() {

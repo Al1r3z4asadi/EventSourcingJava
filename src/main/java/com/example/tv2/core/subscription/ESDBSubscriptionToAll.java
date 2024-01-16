@@ -3,7 +3,7 @@ package com.example.tv2.core.subscription;
 
 import com.eventstore.dbclient.*;
 import com.example.tv2.core.events.eventbus.EventBus;
-import com.example.tv2.core.events.eventbus.EventEnvelope;
+import com.example.tv2.core.events.EventEnvelope;
 import com.example.tv2.core.events.eventbus.EventTypeMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

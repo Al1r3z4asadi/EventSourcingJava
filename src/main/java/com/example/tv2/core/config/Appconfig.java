@@ -14,7 +14,7 @@ import java.util.UUID;
 public class Appconfig {
     @Bean
     @ApplicationScope
-    AggregateStore<Order, OrderEvent, UUID> shoppingCartStore(EventStoreDBClient eventStore) {
+    AggregateStore<Order, OrderEvent, UUID> OrderStore(EventStoreDBClient eventStore) {
         return new AggregateStore<>(
                 eventStore,
                 Order::mapToStreamId,

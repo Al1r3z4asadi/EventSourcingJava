@@ -1,8 +1,7 @@
-package com.example.tv2.core.events.eventbus;
+package com.example.tv2.core.events;
 
 
 import com.eventstore.dbclient.ResolvedEvent;
-import com.example.tv2.core.events.IEvent;
 import com.example.tv2.core.serialization.EventSerializer;
 import org.springframework.core.ResolvableType;
 import org.springframework.core.ResolvableTypeProvider;

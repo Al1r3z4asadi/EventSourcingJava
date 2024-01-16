@@ -3,6 +3,7 @@ package com.example.tv2.core.aggregate;
 
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.UUID;
 
 public abstract class AbstractAggregate<Event, Id> implements Aggregate<Id> {
     protected Id id;
@@ -28,11 +29,12 @@ public abstract class AbstractAggregate<Event, Id> implements Aggregate<Id> {
 
     public abstract void when(Event event);
 
-    protected void enqueue(Event event) {
+    protected UUID enqueue(Event event) {
         uncommittedEvents.add(event);
         when(event);
 //        version++;
 //        no versioning for now
+        return UUID.randomUUID();
     }
 
 

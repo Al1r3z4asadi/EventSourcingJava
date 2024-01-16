@@ -1,6 +1,9 @@
 package com.example.tv2.core.models;
 
+import com.example.tv2.core.Exceptions.ErrorCodes;
+import com.example.tv2.core.Exceptions.OrderException;
 import com.example.tv2.core.aggregate.AbstractAggregate;
+import com.example.tv2.core.events.EventMetadata;
 import com.example.tv2.core.events.OrderEvent;
 
 import java.util.UUID;
@@ -13,27 +16,36 @@ public class Order extends AbstractAggregate<OrderEvent, UUID> {
 
     private OrderStatus status;
 
+    public static Order Initiate(UUID orderId, String phoneNumber, String correlationId) {
+        return new Order(orderId , phoneNumber , correlationId);
+    }
+
     OrderStatus status() {
         return status;
     }
 
     public Order(
             UUID id,
-            String phoneNumber
+            String phoneNumber ,
+            String correlationId
     ) {
         this.id = id;
         this.phoneNumber = phoneNumber;
-
-        enqueue(new OrderEvent.OrderInitiated(id, phoneNumber));
+        EventMetadata metadata = new EventMetadata(correlationId) ;
+        enqueue(new OrderEvent.OrderInitiated(id, phoneNumber ,metadata));
     }
     public Product products() {
         return products;
     }
 
-    public void addProductItem(Product productItems) {
-           enqueue(new OrderEvent.ProductAddedToOrder(
+    public void addProductItem(Product productItems , String correlationId , long causeationId) {
+        if (productItems == null)
+            throw new OrderException(ErrorCodes.PRODUCT_NOT_FOUND.getMessage() ,
+                                     ErrorCodes.PRODUCT_NOT_FOUND.getCode());
+        EventMetadata metadata = new EventMetadata(correlationId ,causeationId) ;
+        enqueue(new OrderEvent.ProductAddedToOrder(
                 id,
-                productItems
+                productItems , metadata
         ));
     }
 

@@ -5,13 +5,14 @@ import org.springframework.validation.annotation.Validated;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.UUID;
 
 public final class OrderRequests {
 
 
     @Validated
     public record ProductItemRequest(
-            @NotNull String productId,
+            @NotNull UUID productId,
             @NotNull Integer quantity ,
             @NotNull BigDecimal price
             ) {

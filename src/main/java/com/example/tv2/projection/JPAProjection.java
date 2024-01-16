@@ -2,7 +2,7 @@ package com.example.tv2.projection;
 
 
 import com.example.tv2.core.events.IEvent;
-import com.example.tv2.core.events.eventbus.EventEnvelope;
+import com.example.tv2.core.events.EventEnvelope;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.repository.CrudRepository;
@@ -31,7 +31,7 @@ public abstract class JPAProjection<View, Id> {
         var view = repository.findById(viewId);
 
         if (view.isEmpty()) {
-            logger.warn("View with id %s was not found for event %s".formatted(viewId, eventEnvelope.metadata().eventType()));
+            logger.warn("View with id %s was not found for event %s".formatted(viewId, eventEnvelope.metadata().getEventType()));
             return;
         }
 

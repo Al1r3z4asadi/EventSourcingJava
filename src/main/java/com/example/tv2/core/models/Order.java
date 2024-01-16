@@ -60,7 +60,8 @@ public class Order extends AbstractAggregate<OrderEvent, UUID> {
     @Override
     public void when(OrderEvent orderEvent) {
         if (orderEvent == null) {
-            throw new IllegalArgumentException("Event cannot be null!");
+            throw new OrderException(ErrorCodes.CAN_NOT_APPLY_TO_EMPTY_EVENT.getMessage(),
+                                    ErrorCodes.CAN_NOT_APPLY_TO_EMPTY_EVENT.getCode());
         }
 
         if (orderEvent instanceof OrderEvent.ProductAddedToOrder) {
@@ -74,7 +75,8 @@ public class Order extends AbstractAggregate<OrderEvent, UUID> {
             status = OrderStatus.Pending;
         }
         else {
-            throw new IllegalArgumentException("Unsupported event type: " + orderEvent.getClass().getSimpleName());
+            throw new OrderException(ErrorCodes.UNSUPPORTED_EVENT.getMessage() + orderEvent.getClass().getSimpleName(),
+                                    ErrorCodes.UNSUPPORTED_EVENT.getCode());
         }
     }
 

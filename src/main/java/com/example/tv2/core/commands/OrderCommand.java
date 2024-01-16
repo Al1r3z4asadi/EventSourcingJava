@@ -14,7 +14,6 @@ public interface OrderCommand extends ICommand {
     ) implements OrderCommand {}
 
     record  RemoveProductFromOrder(
-
     ) implements OrderCommand {}
 
 }

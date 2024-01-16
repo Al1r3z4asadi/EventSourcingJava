@@ -25,11 +25,10 @@ import static org.springframework.http.HttpStatus.OK;
 public class OrderController {
 
     private final IOrderCommandHandler _handler ;
-
     private final IOrderQueryHandler _queryhandler ;
 
-    public OrderController(IOrderCommandHandler handler , IOrderQueryHandler _queryHandler
-    ) {
+    public OrderController(IOrderCommandHandler handler , IOrderQueryHandler _queryHandler)
+    {
         _handler = handler;
         this._queryhandler =_queryHandler ;
     }
@@ -68,5 +67,6 @@ public class OrderController {
                         .data(Map.of("result" , result))
                         .statusCode(result.isSuccess() ? OK.value() : BAD_REQUEST.value())
                         .build()
-        );    }
+        );
+    }
 }

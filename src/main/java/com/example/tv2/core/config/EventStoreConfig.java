@@ -37,12 +37,12 @@ public class EventStoreConfig {
         return new ESSubscriptionCheckpointRepository(eventStore);
     }
 
-//    @Bean
-//    ESDBSubscriptionBackground eventStoreDBSubscriptionBackground(
-//            EventStoreDBClient eventStore,
-//            SubscriptionCheckpointRepository subscriptionCheckpointRepository,
-//            EventBus eventBus
-//    ) {
-//        return new ESDBSubscriptionBackground(eventStore, subscriptionCheckpointRepository, eventBus);
-//    }
+    @Bean
+    ESDBSubscriptionBackground eventStoreDBSubscriptionBackground(
+            EventStoreDBClient eventStore,
+            SubscriptionCheckpointRepository subscriptionCheckpointRepository,
+            EventBus eventBus
+    ) {
+        return new ESDBSubscriptionBackground(eventStore, subscriptionCheckpointRepository, eventBus);
+    }
 }

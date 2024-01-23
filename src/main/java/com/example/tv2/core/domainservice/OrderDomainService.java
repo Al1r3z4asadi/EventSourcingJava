@@ -34,7 +34,7 @@ public class OrderDomainService {
         var orderId = UUID.randomUUID();
         String correlationId = UUID.randomUUID().toString();
         long causeationId = initiateOrder(orderId , command.phoneNumber() , correlationId);
-        store.getAndUpdate(
+            store.getAndUpdate(
                 current -> current.addProductItem(new Product(command.data()) ,correlationId , causeationId),
                 orderId,
                 0

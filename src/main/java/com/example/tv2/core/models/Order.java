@@ -15,7 +15,15 @@ public class Order extends AbstractAggregate<OrderEvent, UUID> {
     private Product products;
 
     private OrderStatus status;
+    
+    public OrderStatus getStatus(){
+        return this.status ;
+    }
+    public String getPhoneNumber(){
+        return this.phoneNumber ;
+    }
 
+    
     public static Order Initiate(UUID orderId, String phoneNumber, String correlationId) {
         return new Order(orderId , phoneNumber , correlationId);
     }

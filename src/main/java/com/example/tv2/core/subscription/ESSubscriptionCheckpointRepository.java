@@ -19,7 +19,7 @@ public final class ESSubscriptionCheckpointRepository implements SubscriptionChe
         this.eventStore = eventStore;
     }
 
-    public Optional<Long> load(String subscriptionId) {
+    public void load(String subscriptionId) {
         var streamName = getCheckpointStreamName(subscriptionId);
 
         var readOptions = ReadStreamOptions.get()
@@ -27,13 +27,15 @@ public final class ESSubscriptionCheckpointRepository implements SubscriptionChe
                 .fromEnd();
 
         try {
-            return eventStore.readStream(streamName, readOptions)
-                    .get()
-                    .getEvents()
-                    .stream()
-                    .map(e -> EventSerializer.<Checkpoint>deserialize(e).map(ch -> ch.getPosition()))
-                    .findFirst()
-                    .orElse(Optional.empty());
+            var s =  eventStore.readStream(streamName, readOptions).get();
+
+//            return eventStore.readStream(streamName, readOptions)
+//                    .get()
+//                    .getEvents()
+//                    .stream()
+//                    .map(e -> EventSerializer.<Checkpoint>deserialize(e).map(ch -> ch.getPosition()))
+//                    .findFirst()
+//                    .orElse(Optional.empty());
 
         } catch (Throwable e) {
             Throwable innerException = e.getCause();
@@ -42,7 +44,6 @@ public final class ESSubscriptionCheckpointRepository implements SubscriptionChe
                 logger.error("Failed to load checkpoint", e);
                 throw new RuntimeException(e);
             }
-            return Optional.empty();
         }
     }
 

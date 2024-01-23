@@ -1,13 +1,11 @@
 package com.example.tv2.projection;
 
-import com.example.tv2.core.Dto.OrderDetailsDto;
 import com.example.tv2.core.events.OrderEvent;
 import com.example.tv2.core.events.EventEnvelope;
 import com.example.tv2.core.models.OrderStatus;
 import com.example.tv2.projection.model.OrderDetailsProductItem;
 import com.example.tv2.projection.model.OrderDetailsView;
 import com.example.tv2.projection.repositories.OrderDetailsRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +18,7 @@ public class OrderDetailsProjection extends JPAProjection<OrderDetailsView, UUID
     }
 
     @EventListener
-    void handleOrderInitiated(EventEnvelope<OrderEvent.OrderInitiated> eventEnvelope) {
+    public void handleOrderInitiated(EventEnvelope<OrderEvent.OrderInitiated> eventEnvelope) {
         add(eventEnvelope, () -> {
             var event = eventEnvelope.data();
             return new OrderDetailsView(

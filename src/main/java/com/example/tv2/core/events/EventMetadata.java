@@ -37,6 +37,8 @@ public class EventMetadata{
     private long logPosition;
     private String eventType;
 
+    public EventMetadata(){
+    }
     public EventMetadata(String corrolationId){
         this.corrolationId = corrolationId ;
     }

@@ -21,7 +21,7 @@ public class OrderCommandHandler implements IOrderCommandHandler {
 
         //Coordination happens here
         _orderdomainService.AddProduct(command) ;
-        return ServiceResult.failure("error");
+            return ServiceResult.failure("error");
     }
 
     @Override

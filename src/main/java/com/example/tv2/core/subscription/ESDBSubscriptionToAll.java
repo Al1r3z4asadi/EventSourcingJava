@@ -62,25 +62,26 @@ public class ESDBSubscriptionToAll{
         this.subscriptionOptions = subscriptionOptions;
 
         try {
-            retryTemplate.execute(context -> {
-                var checkpoint = checkpointRepository.load(subscriptionOptions.getSubscriptionId());
-
-                if (!checkpoint.isEmpty()) {
+            subscription = eventStoreClient.subscribeToAll(
+                    listener,
                     subscriptionOptions.getSubscribeToAllOptions()
-                            .fromPosition(new Position(checkpoint.get(), checkpoint.get()));
-                } else {
-                    subscriptionOptions.getSubscribeToAllOptions()
-                            .fromStart();
-                }
+            ).get();
+//            retryTemplate.execute(context -> {
+//                 checkpointRepository.load(subscriptionOptions.getSubscriptionId());
 
-                logger.info("Subscribing to all '%s'".formatted(subscriptionOptions.getSubscriptionId()));
+//                if (!checkpoint.isEmpty()) {
+//                    subscriptionOptions.getSubscribeToAllOptions()
+//                            .fromPosition(new Position(checkpoint.get(), checkpoint.get()));
+//                } else {
+//                    subscriptionOptions.getSubscribeToAllOptions()
+//                            .fromStart();
+//                }
 
-                subscription = eventStoreClient.subscribeToAll(
-                        listener,
-                        subscriptionOptions.getSubscribeToAllOptions()
-                ).get();
-                return null;
-            });
+//                logger.info("Subscribing to all '%s'".formatted(subscriptionOptions.getSubscriptionId()));
+
+
+//                return null;
+//            });
         } catch (Throwable e) {
             logger.error("Error while starting subscription", e);
             throw new RuntimeException(e);
